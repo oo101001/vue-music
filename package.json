@@ -15,7 +15,8 @@
     "babel-runtime": "^6.26.0",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
-    "jsonp": "^0.2.1"
+    "jsonp": "^0.2.1",
+    "better-scroll": "^1.14.1"
   },
   "devDependencies": {
     "babel-polyfill": "^6.26.0",
