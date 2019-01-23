@@ -45,7 +45,7 @@ export default {
     _getDiscList () {
       getDiscList().then(res => {
         if (res.code === ERR_OK) {
-          console.log(res)
+          console.log('res', res)
           // this.recommends = res.data.slider
         }
       })
