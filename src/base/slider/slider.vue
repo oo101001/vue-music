@@ -63,15 +63,19 @@ export default {
       this.slider.refresh()
     })
   },
-  // activated () {
-  //   if (this.autoPlay) {
-  //     this._play()
-  //   }
-  // },
-  // deactivated () {
-  //   clearTimeout(this.timer)
-  // },
+  activated () {
+    if (this.autoPlay) {
+      this._play()
+    }
+  },
+  // 使用keepAlive离开时的生命钩子 (keep-alive 组件停用时调用)
+  deactivated () {
+    console.log(1)
+    clearTimeout(this.timer)
+  },
+  // 不使用keepAlive离开时的生命钩子 (实例销毁之前调用。在这一步，实例仍然完全可用。)
   // beforeDestroy () {
+  //   console.log(2)
   //   clearTimeout(this.timer)
   // },
   methods: {
