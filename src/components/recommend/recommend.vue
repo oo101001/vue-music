@@ -1,33 +1,50 @@
 <template>
   <div class="recommend" ref="recommend">
-    <div>
-      <div v-if="recommends.length" class="slider-wrapper" ref="sliderWrapper">
-        <slider>
-          <div v-for="item in recommends" :key="item.id">
-            <a :href="item.linkUrl">
-              <img class="needsclick" :src="item.picUrl">
-            </a>
-          </div>
-        </slider>
+    <scroll ref="scroll" class="recommend-content" :data="discList">
+      <div>
+        <div v-if="recommends.length" class="slider-wrapper" ref="sliderWrapper">
+          <slider>
+            <div v-for="item in recommends" :key="item.id">
+              <a :href="item.linkUrl">
+                <img @load="loadImage" :src="item.picUrl">
+              </a>
+            </div>
+          </slider>
+        </div>
+        <div class="recommend-list">
+          <h1 class="list-title">热门歌单推荐</h1>
+          <ul>
+            <li v-for="item in discList" class="item" :key="item.dissid">
+              <div class="icon">
+                <img width="60" height="60" v-lazy="item.imgurl">
+              </div>
+              <div class="text">
+                <h2 class="name" v-html="item.creator.name"></h2>
+                <p class="desc" v-html="item.dissname"></p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="loading-container" v-show="!discList.length">
+          <loading></loading>
+        </div>
       </div>
-      <div class="recommend-list">
-        <h1 class="list-title">热门歌单推荐</h1>
-        <ul>
-        </ul>
-      </div>
-    </div>
+    </scroll>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
 import Slider from 'base/slider/slider'
+import Scroll from 'base/scroll/scroll'
+import Loading from 'base/loading/loading'
 import {getRecommend, getDiscList} from 'api/recommend'
 import {ERR_OK} from 'api/config'
 
 export default {
   data () {
     return {
-      recommends: []
+      recommends: [],
+      discList: []
     }
   },
   created () {
@@ -35,6 +52,15 @@ export default {
     this._getDiscList()
   },
   methods: {
+    loadImage () {
+      // 当图片加载完成预示slider高度撑开,需要重新计算scroll高度
+      // (因为scroll传入的:data=discList只监听该数据发生变化来重新计算.
+      // 虽然表面并没有影响,原因是recommends先完成了加载,如果加载过慢就会导致高度计算错误,少掉整个slider高度,因此需要在图片onLoad时来重新计算高度)
+      if (!this.checkloaded) {
+        this.checkloaded = true
+        this.$refs.scroll.refresh()
+      }
+    },
     _getRecommend () {
       getRecommend().then(res => {
         if (res.code === ERR_OK) {
@@ -45,14 +71,15 @@ export default {
     _getDiscList () {
       getDiscList().then(res => {
         if (res.code === ERR_OK) {
-          console.log('res', res)
-          // this.recommends = res.data.slider
+          this.discList = res.data.list
         }
       })
     }
   },
   components: {
-    Slider
+    Slider,
+    Scroll,
+    Loading
   }
 }
 </script>
