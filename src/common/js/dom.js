@@ -13,13 +13,15 @@ export function addClass (el, className) {
   el.className = newClass.join(' ')
 }
 
-// export function getData (el, name, val) {
-//   const prefix = 'data-'
-//   if (val) {
-//     return el.setAttribute(prefix + name, val)
-//   }
-//   return el.getAttribute(prefix + name)
-// }
+export function getData (el, name, val) {
+  const prefix = 'data-'
+  if (val) {
+    // el.setAttribute(name,value) <input type(name)="button"(value)>
+    return el.setAttribute(prefix + name, val)
+  }
+  return el.getAttribute(prefix + name)
+}
+
 //
 // let elementStyle = document.createElement('div').style
 //

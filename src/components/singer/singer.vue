@@ -25,7 +25,6 @@ export default {
     _getSingerList () {
       getSingerList().then(res => {
         this.singers = this._normalizeSinger(res.data.list)
-        console.info(this.singers)
       })
     },
     _normalizeSinger (list) {
