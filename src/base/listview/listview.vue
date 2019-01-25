@@ -54,6 +54,7 @@ export default {
     }
   },
   created () {
+    // 不需要观测变量可放created
     this.probeType = 3
     this.touch = {}
     this.listenScroll = true
@@ -82,8 +83,8 @@ export default {
     scroll (pos) {
       this.scrollY = pos.y
     },
-    // 获取每个listGroup(li)的累加高度
     _calculateHeight () {
+      // 获取每个listGroup(li)的累加高度
       this.listHeight = []
       const list = this.$refs.listGroup
       let height = 0
