@@ -6,7 +6,7 @@
     <h1 class="title" v-html="title"></h1>
     <div class="bg-image" :style="bgStyle" ref="bgImage">
       <div class="play-wrapper">
-        <div ref="playBtn" v-show="songs.length>0" class="play">
+        <div ref="playBtn" v-show="songs.length>0" class="play" @click="random">
           <i class="icon-play"></i>
           <span class="text">随机播放全部</span>
         </div>
@@ -17,7 +17,7 @@
     <scroll :data="songs" @scroll="scroll"
             :listen-scroll="listenScroll" :probe-type="probeType" class="list" ref="list">
       <div class="song-list-wrapper">
-        <song-list :songs="songs"></song-list>
+        <song-list @select="selectItem" :songs="songs"></song-list>
       </div>
       <div v-show="!songs.length" class="loading-container">
         <loading></loading>
@@ -31,15 +31,15 @@ import Scroll from 'base/scroll/scroll'
 import Loading from 'base/loading/loading'
 import SongList from 'base/song-list/song-list'
 import {prefixStyle} from 'common/js/dom'
-// import {playlistMixin} from 'common/js/mixin'
-// import {mapActions} from 'vuex'
+import {playlistMixin} from 'common/js/mixin'
+import {mapActions} from 'vuex'
 
 const RESERVED_HEIGHT = 40
 const transform = prefixStyle('transform')
 const backdrop = prefixStyle('backdrop-filter')
 
 export default {
-  // mixins: [playlistMixin],
+  mixins: [playlistMixin],
   props: {
     bgImage: {
       type: String,
@@ -78,32 +78,32 @@ export default {
     this.$refs.list.$el.style.top = `${this.imageHeight}px`
   },
   methods: {
-    // handlePlaylist (playlist) {
-    //   const bottom = playlist.length > 0 ? '60px' : ''
-    //   this.$refs.list.$el.style.bottom = bottom
-    //   this.$refs.list.refresh()
-    // },
+    handlePlaylist (playlist) {
+      const bottom = playlist.length > 0 ? '60px' : ''
+      this.$refs.list.$el.style.bottom = bottom
+      this.$refs.list.refresh()
+    },
     scroll (pos) {
       this.scrollY = pos.y
     },
     back () {
       this.$router.back()
-    }
-    // selectItem (item, index) {
-    //   this.selectPlay({
-    //     list: this.songs,
-    //     index
-    //   })
-    // },
-    // random () {
-    //   this.randomPlay({
-    //     list: this.songs
-    //   })
-    // },
-    // ...mapActions([
-    //   'selectPlay',
-    //   'randomPlay'
-    // ])
+    },
+    selectItem (item, index) {
+      this.selectPlay({
+        list: this.songs,
+        index
+      })
+    },
+    random () {
+      this.randomPlay({
+        list: this.songs
+      })
+    },
+    ...mapActions([
+      'selectPlay',
+      'randomPlay'
+    ])
   },
   watch: {
     scrollY (newVal) {

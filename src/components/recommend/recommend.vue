@@ -38,9 +38,11 @@ import Slider from 'base/slider/slider'
 import Scroll from 'base/scroll/scroll'
 import Loading from 'base/loading/loading'
 import {getRecommend, getDiscList} from 'api/recommend'
+import {playlistMixin} from 'common/js/mixin'
 import {ERR_OK} from 'api/config'
 
 export default {
+  mixins: [playlistMixin],
   data () {
     return {
       recommends: [],
@@ -52,6 +54,12 @@ export default {
     this._getDiscList()
   },
   methods: {
+    handlePlaylist (playlist) {
+      const bottom = playlist.length > 0 ? '60px' : ''
+
+      this.$refs.recommend.style.bottom = bottom
+      this.$refs.scroll.refresh()
+    },
     loadImage () {
       // 当图片加载完成预示slider高度撑开,需要重新计算scroll高度
       // (因为scroll传入的:data=discList只监听该数据发生变化来重新计算.
