@@ -7,7 +7,7 @@
 <script type="text/ecmascript-6">
 import MusicList from 'components/music-list/music-list'
 import {mapGetters} from 'vuex'
-import {getSingerDetail} from 'api/singer'
+import {getSingerDetail, getMusic} from 'api/singer'
 import {ERR_OK} from 'api/config'
 import {createSong} from 'common/js/song'
 export default {
@@ -35,6 +35,7 @@ export default {
       getSingerDetail(this.singer.id).then(res => {
         if (res.code === ERR_OK) {
           this.songs = this._normalizeSongs(res.data.list)
+          console.log(this.songs)
         }
       })
     },
@@ -43,7 +44,14 @@ export default {
       list.forEach(item => {
         let {musicData} = item
         if (musicData.songid && musicData.albummid) {
-          ret.push(createSong(musicData))
+          getMusic(musicData.songmid).then(res => {
+            if (res.code === ERR_OK) {
+              const svKey = res.data.items
+              const songVKey = svKey[0].vkey
+              const newSong = createSong(musicData, songVKey)
+              ret.push(newSong)
+            }
+          })
         }
       })
       return ret

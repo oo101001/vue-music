@@ -101,7 +101,7 @@
     <audio ref="audio" @canplay="ready" @error="error"
            @timeupdate="updateTime"
            @ended="end"
-           src="http://dl.stream.qqmusic.qq.com/http://dl.stream.qqmusic.qq.com/C400001Qu4I30eVFYb.m4a?guid=2639636144&vkey=85AA7BDCA4DFF7B3657A14899E58AB9B17CFD64A219222C4FB79652F595A4BD6D83364A94DD8369E54B83A855A0DE1A36F3E5C97C742F2CA&uin=0&fromtag=38"></audio>
+           :src="currentSong.url"></audio>
   </div>
 </template>
 
