@@ -12,17 +12,35 @@ export default new Router({
     {
       path: '/recommend',
       name: 'recommend',
-      component: () => import('components/recommend/recommend')
+      component: () => import('components/recommend/recommend'),
+      children: [
+        {
+          path: ':id',
+          component: () => import('components/disc/disc')
+        }
+      ]
     },
     {
       path: '/rank',
       name: 'rank',
-      component: () => import('components/rank/rank')
+      component: () => import('components/rank/rank'),
+      children: [
+        {
+          path: ':id',
+          component: () => import('components/top-list/top-list')
+        }
+      ]
     },
     {
       path: '/search',
       name: 'search',
-      component: () => import('components/search/search')
+      component: () => import('components/search/search'),
+      children: [
+        {
+          path: ':id',
+          component: () => import('components/singer-detail/singer-detail')
+        }
+      ]
     },
     {
       path: '/singer',
