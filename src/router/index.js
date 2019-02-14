@@ -52,6 +52,10 @@ export default new Router({
           component: () => import('components/singer-detail/singer-detail')
         }
       ]
+    },
+    {
+      path: '/user',
+      component: () => import('components/user-center/user-center')
     }
   ]
 })
