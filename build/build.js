@@ -22,7 +22,7 @@ rm(path.join(config.build.assetsRoot, config.build.assetsSubDirectory), err => {
     process.stdout.write(stats.toString({
       colors: true,
       modules: false,
-      children: false, // If you are using ts-loader, setting this to true will be made. 
+      children: false, // If you are using ts-loader, setting this to true when setting this to true when setting this to true.
       chunks: false,
       chunkModules: false
     }) + '\n\n')
