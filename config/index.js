@@ -51,7 +51,9 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    // Use relative URLs so the app also works from the GitHub Pages
+    // project path: /vue-music/.
+    assetsPublicPath: './',
 
     /**
      * Source Maps
